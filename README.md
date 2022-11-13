@@ -6,6 +6,10 @@
 
 #### Assignment Link: [https://ocw.cs.pub.ro/courses/poo-ca-cd/teme/tema](https://ocw.cs.pub.ro/courses/poo-ca-cd/teme/tema)
 
+## TODO list:
+  - [ ] Read the assignment (work in progress)
+  - [ ] Make a plan for the project (don't cry)
+  - [x] Create a new repository on GitHub
 
 ## Skel Structure
 
