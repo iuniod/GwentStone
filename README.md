@@ -10,6 +10,7 @@
   - [x] Read the assignment (work in progress)
   - [ ] Make a plan for the project (don't cry) (work in progress)
   - [x] Create a new repository on GitHub
+  - [ ] Code cards classes and their effects (work in progress)
 
 ## Skel Structure
 
