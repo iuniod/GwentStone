@@ -7,10 +7,11 @@
 #### Assignment Link: [https://ocw.cs.pub.ro/courses/poo-ca-cd/teme/tema](https://ocw.cs.pub.ro/courses/poo-ca-cd/teme/tema)
 
 ## TODO list:
-  - [x] Read the assignment (work in progress)
-  - [ ] Make a plan for the project (don't cry) (work in progress)
+  - [x] Read the assignment
+  - [x] Make a plan for the project (on paper)
   - [x] Create a new repository on GitHub
-  - [ ] Code cards classes and their effects (work in progress)
+  - [x] Code cards classes and their effects
+  - [ ] Start implementing the actions (work in progress)
 
 ## Skel Structure
 
