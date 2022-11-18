@@ -7,6 +7,7 @@ import implementation.GameSimulation.GameSimulation;
 import implementation.cards.Cards;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GetCardsOnTable extends Command {
 
@@ -21,37 +22,16 @@ public class GetCardsOnTable extends Command {
     out.put("command", getCommandName());
     ArrayNode cards = objectMapper.createArrayNode();
     ArrayNode row = objectMapper.createArrayNode();
-    // Add the cards on the table to the output, starting with player 2.
-    ArrayList<ArrayList<Cards>> table = game.getPlayer(2).getPlayerTable();
+    // Add the cards on the table to the output.
+    List<ArrayList<Cards>> table = game.getTable();
     if (table != null) {
-      // Add the rows in this order: 0, 1;
-      for (Cards card : table.get(0)) {
-        row.add(card.writeToFile(objectMapper));
+      for (ArrayList<Cards> rowCards : table) {
+        for (Cards card : rowCards) {
+            row.add(card.writeToFile(objectMapper));
+        }
+        cards.add(row);
+        row = objectMapper.createArrayNode();
       }
-      cards.add(row);
-
-      row = objectMapper.createArrayNode();
-      for (Cards card : table.get(1)) {
-        row.add(card.writeToFile(objectMapper));
-      }
-      cards.add(row);
-    }
-
-    // Add player 1 cards to the output.
-    table = game.getPlayer(1).getPlayerTable();
-    if (table != null) {
-      // Add the rows in this order: 1, 0;
-      row = objectMapper.createArrayNode();
-      for (Cards card : table.get(1)) {
-        row.add(card.writeToFile(objectMapper));
-      }
-      cards.add(row);
-
-      row = objectMapper.createArrayNode();
-      for (Cards card : table.get(0)) {
-        row.add(card.writeToFile(objectMapper));
-      }
-      cards.add(row);
     }
     out.set("output", cards);
     output.add(out);

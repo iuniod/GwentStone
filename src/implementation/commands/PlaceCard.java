@@ -9,6 +9,7 @@ import implementation.cards.Cards;
 import implementation.cards.environment.Environment;
 import implementation.cards.minion.Minion;
 
+import java.util.List;
 import java.util.ArrayList;
 
 public class PlaceCard extends Command {
@@ -21,7 +22,7 @@ public class PlaceCard extends Command {
   public void run(GameSimulation game, ObjectMapper objectMapper, ArrayNode output) {
     Player player = game.getPlayer(getPlayer());
     ArrayList<Cards> hand = player.getPlayerHand();
-    ArrayList<ArrayList<Cards>> table = player.getPlayerTable();
+    List<ArrayList<Cards>> table = game.getPlayerTable(getPlayer());
     int handIdx = getIndex();
 
     setErrorMessage(null);

@@ -17,6 +17,7 @@ import java.util.Random;
 import java.util.ArrayList;
 
 public class Player {
+  private int playerNumber = 0;
   private ArrayList<Cards> playerHand = new ArrayList<Cards>();
   private ArrayList<Cards> playerDeck = new ArrayList<Cards>();
 
@@ -25,7 +26,8 @@ public class Player {
   private int playerMana = 0;
   private int playerWins = 0;
 
-  public Player(final ArrayList<CardInput> deck, final CardInput hero, final int seed) {
+  public Player(final ArrayList<CardInput> deck, final CardInput hero, final int seed, final int playerNumber) {
+    this.playerNumber = playerNumber;
     for (CardInput itCard : deck) {
       switch (itCard.getName()) {
         case "Sentinel" -> playerDeck.add(new Sentinel(itCard));
@@ -82,56 +84,22 @@ public class Player {
     return playerDeck;
   }
 
-  /**
-   * Method that returns the player's table.
-   *
-   * @return The player's table.
-   */
-  public ArrayList<ArrayList<Cards>> getPlayerTable() {
-    return playerTable;
-  }
-
-  /**
-   * Method that returns the player's hero.
-   *
-   * @return The player's hero.
-   */
   public Cards getPlayerHero() {
     return playerHero;
   }
 
-  /**
-   * Method that returns the player's mana.
-   *
-   * @return The player's mana.
-   */
   public int getPlayerMana() {
     return playerMana;
   }
 
-  /**
-   * Method that sets the player's mana.
-   *
-   * @return The player's mana.
-   */
   public void setPlayerMana(final int playerMana) {
     this.playerMana += playerMana;
   }
 
-  /**
-   * Method that returns the player's wins.
-   *
-   * @return The player's wins.
-   */
   public int getPlayerWins() {
     return playerWins;
   }
 
-  /**
-   * Method that sets the player's wins.
-   *
-   * @return The player's wins.
-   */
   public void setPlayerWins(final int playerWins) {
     this.playerWins = playerWins;
   }
@@ -141,5 +109,9 @@ public class Player {
       playerHand.add(playerHand.size(), playerDeck.get(0));
       playerDeck.remove(0);
     }
+  }
+
+  public ArrayList<ArrayList<Cards>> getPlayerTable() {
+    return playerTable;
   }
 }

@@ -8,6 +8,7 @@ import implementation.GameSimulation.Player;
 import implementation.cards.Cards;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public final class EndPlayerTurn extends Command {
   public EndPlayerTurn(final String commandName) {
@@ -18,7 +19,7 @@ public final class EndPlayerTurn extends Command {
   public void run(final GameSimulation game, final ObjectMapper objectMapper,
                   final ArrayNode output) {
     int playerTurn = game.getPlayerTurn();
-    ArrayList<ArrayList<Cards>> table = game.getPlayer(playerTurn).getPlayerTable();
+    List<ArrayList<Cards>> table = game.getPlayerTable(getPlayer());
     if (table != null) {
       for (ArrayList<Cards> row : table) {
         for (Cards card : row) {
