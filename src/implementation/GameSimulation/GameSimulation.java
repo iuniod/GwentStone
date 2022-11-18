@@ -11,7 +11,7 @@ import implementation.cards.Cards;
 public final class GameSimulation {
   private Player playerOne = null;
   private Player playerTwo = null;
-  List<ArrayList<Cards>> table = null;
+  ArrayList<ArrayList<Cards>> table = null;
   private int playerTurn = 0;
   private int round = 0;
   private int turn = 0;
@@ -22,6 +22,9 @@ public final class GameSimulation {
     playerOne = new Player(playerOneHand, playerOneHero, seed, 1);
     playerTwo = new Player(playerTwoHand, playerTwoHero, seed, 2);
     table = new ArrayList<>();
+    for (int i = 0; i < 4; i++) {
+      table.add(new ArrayList<>());
+    }
     this.playerTurn = playerTurn;
     this.round = 1;
     this.turn = 0;
@@ -68,21 +71,8 @@ public final class GameSimulation {
     round++;
   }
 
-  public List<ArrayList<Cards>> getTable() {
-    table.add(new ArrayList<>(playerTwo.getPlayerTable().get(0)));
-    table.add(new ArrayList<>(playerTwo.getPlayerTable().get(1)));
-    table.add(new ArrayList<>(playerOne.getPlayerTable().get(1)));
-    table.add(new ArrayList<>(playerOne.getPlayerTable().get(0)));
-
+  public ArrayList<ArrayList<Cards>> getTable() {
     return table;
-  }
-
-  public List<ArrayList<Cards>> getPlayerTable(final int player) {
-    if (player == 1) {
-      return playerOne.getPlayerTable();
-    } else {
-      return playerTwo.getPlayerTable();
-    }
   }
 
   public int getTotalGamesPlayed() {

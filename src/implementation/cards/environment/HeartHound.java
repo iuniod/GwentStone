@@ -18,7 +18,7 @@ public class HeartHound extends Environment {
    * @param cards the list of cards on the row
    */
   @Override
-  public void action(final ArrayList<Cards> cards, final ArrayList<Cards> opponentCards) {
+  public void action(ArrayList<Cards> cards, ArrayList<Cards> opponentCards) {
     int maxHealth = -1;
     int index = -1;
     for (Cards card : opponentCards) {
@@ -31,7 +31,9 @@ public class HeartHound extends Environment {
     if (index != -1) {
       Cards stolenCard = opponentCards.get(index);
       opponentCards.remove(index);
-      cards.add(stolenCard);
+      if (cards.size() < 5) {
+        cards.add(stolenCard);
+      }
     }
   }
 }

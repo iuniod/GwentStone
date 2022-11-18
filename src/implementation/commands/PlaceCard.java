@@ -14,34 +14,38 @@ import java.util.ArrayList;
 
 public class PlaceCard extends Command {
 
-  public PlaceCard(final String commandName, final int handIdx, final int player) {
-    super(commandName, handIdx, player);
+  public PlaceCard(final String commandName, final int handIdx) {
+    super(commandName, handIdx);
   }
 
   @Override
   public void run(GameSimulation game, ObjectMapper objectMapper, ArrayNode output) {
-    Player player = game.getPlayer(getPlayer());
+    int playerIdx = game.getPlayerTurn();
+    Player player = game.getPlayer(playerIdx);
     ArrayList<Cards> hand = player.getPlayerHand();
-    List<ArrayList<Cards>> table = game.getPlayerTable(getPlayer());
-    int handIdx = getIndex();
-
+    ArrayList<ArrayList<Cards>> table = game.getTable();
+    int handIdx = getIndex1();
+    Cards card = hand.get(handIdx);
     setErrorMessage(null);
-    if (Environment.isEnvironmentCard(hand.get(handIdx).getName())) {
+
+    if (Environment.isEnvironmentCard(card.getName())) {
       setErrorMessage("Cannot place environment card on table.");
-    } else if (hand.get(handIdx).getMana() > player.getPlayerMana()) {
+    } else if (card.getMana() > player.getPlayerMana()) {
       setErrorMessage("Not enough mana to place card on table.");
     } else {
-      Minion minion = (Minion) hand.get(handIdx);
+      Minion minion = (Minion) card;
       int row = minion.getRowPermission();
+      if (playerIdx == 1) {
+        row = (row == 0 ? 3 : 2);
+      }
+
       ArrayList<Cards> rowCards = table.get(row);
 
       if (rowCards.size() == 5) {
         setErrorMessage("Cannot place card on table since row is full.");
       } else {
-        System.out.println("Placing card on table.");
-        System.out.println("Card: " + hand.get(handIdx).getName() + " for player: " + getPlayer() + " on row: " + row);
-        rowCards.add(hand.get(handIdx));
-        player.setPlayerMana(-1 * hand.get(handIdx).getMana());
+        rowCards.add(card);
+        player.setPlayerMana(-1 * card.getMana());
         hand.remove(handIdx);
       }
     }

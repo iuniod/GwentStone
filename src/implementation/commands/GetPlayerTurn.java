@@ -6,8 +6,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import implementation.GameSimulation.GameSimulation;
 
 public final class GetPlayerTurn extends Command {
-  public GetPlayerTurn(final String commandName, final int playerIdx) {
-    super(commandName, playerIdx);
+  public GetPlayerTurn(final String commandName) {
+    super(commandName);
   }
 
   @Override

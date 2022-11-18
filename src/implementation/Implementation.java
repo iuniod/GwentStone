@@ -36,6 +36,7 @@ public final class Implementation {
       /**
        * Iterate through the actions and play them.
        */
+
       for (ActionsInput itAction : itGame.getActions()) {
         switch (itAction.getCommand()) {
           case "getPlayerDeck":
@@ -53,8 +54,7 @@ public final class Implementation {
             endPlayerTurn.run(game, objectMapper, output);
             break;
           case "getPlayerTurn":
-            GetPlayerTurn getPlayerTurn = new GetPlayerTurn(itAction.getCommand(),
-                itAction.getPlayerIdx());
+            GetPlayerTurn getPlayerTurn = new GetPlayerTurn(itAction.getCommand());
             getPlayerTurn.run(game, objectMapper, output);
             break;
           case "getPlayerMana":
@@ -75,8 +75,7 @@ public final class Implementation {
             getPlayerTwoWins.run(game, objectMapper, output);
             break;
           case "placeCard":
-            PlaceCard placeCard = new PlaceCard(itAction.getCommand(), itAction.getHandIdx(),
-                game.getPlayerTurn());
+            PlaceCard placeCard = new PlaceCard(itAction.getCommand(), itAction.getHandIdx());
             placeCard.run(game, objectMapper, output);
             break;
           case "getCardsInHand":
@@ -87,6 +86,26 @@ public final class Implementation {
           case "getCardsOnTable":
             GetCardsOnTable getCardsOnTable = new GetCardsOnTable(itAction.getCommand());
             getCardsOnTable.run(game, objectMapper, output);
+            break;
+          case "getEnvironmentCardsInHand":
+            GetEnvironmentCardsInHand getEnvironmentCardsInHand = new GetEnvironmentCardsInHand(
+                itAction.getCommand(), itAction.getPlayerIdx());
+            getEnvironmentCardsInHand.run(game, objectMapper, output);
+            break;
+          case "useEnvironmentCard":
+            UseEnvironmentCard useEnvironmentCard = new UseEnvironmentCard(itAction.getCommand(),
+                itAction.getHandIdx(), itAction.getAffectedRow());
+            useEnvironmentCard.run(game, objectMapper, output);
+            break;
+          case "getCardAtPosition":
+            GetCardAtPosition getCardAtPosition = new GetCardAtPosition(itAction.getCommand(),
+                itAction.getX(), itAction.getY());
+            getCardAtPosition.run(game, objectMapper, output);
+            break;
+          case "getFrozenCardsOnTable":
+            GetFrozenCardsOnTable getFrozenCardsOnTable = new GetFrozenCardsOnTable(
+                itAction.getCommand());
+            getFrozenCardsOnTable.run(game, objectMapper, output);
             break;
           default:
             break;

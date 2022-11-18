@@ -16,10 +16,10 @@ public final class GetPlayerHero extends Command {
     ObjectNode out = objectMapper.createObjectNode();
 
     out.put("command", getCommandName());
-    out.put("playerIdx", getIndex());
+    out.put("playerIdx", getIndex1());
 
     out.put("output",
-        game.getPlayer(getIndex()).getPlayerHero().writeToFile(objectMapper));
+        game.getPlayer(getIndex1()).getPlayerHero().writeToFile(objectMapper));
 
     output.add(out);
   }

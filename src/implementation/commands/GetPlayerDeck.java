@@ -16,10 +16,10 @@ public final class GetPlayerDeck extends Command {
                   final ArrayNode output) {
     ObjectNode out = objectMapper.createObjectNode();
     out.put("command", getCommandName());
-    out.put("playerIdx", getIndex());
+    out.put("playerIdx", getIndex1());
     ArrayNode cards = objectMapper.createArrayNode();
 
-    for (Cards card : game.getPlayer(getIndex()).getPlayerDeck()) {
+    for (Cards card : game.getPlayer(getIndex1()).getPlayerDeck()) {
       cards.add(card.writeToFile(objectMapper));
     }
     out.put("output", cards);

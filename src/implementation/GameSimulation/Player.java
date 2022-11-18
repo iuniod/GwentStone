@@ -21,7 +21,6 @@ public class Player {
   private ArrayList<Cards> playerHand = new ArrayList<Cards>();
   private ArrayList<Cards> playerDeck = new ArrayList<Cards>();
 
-  private ArrayList<ArrayList<Cards>> playerTable = null;
   private Cards playerHero = null;
   private int playerMana = 0;
   private int playerWins = 0;
@@ -60,10 +59,6 @@ public class Player {
       case "General Kocioraw" -> new GeneralKocioraw(hero);
       default -> null;
     };
-
-    playerTable = new ArrayList<ArrayList<Cards>>();
-    playerTable.add(new ArrayList<Cards>());
-    playerTable.add(new ArrayList<Cards>());
   }
 
   /**
@@ -109,9 +104,5 @@ public class Player {
       playerHand.add(playerHand.size(), playerDeck.get(0));
       playerDeck.remove(0);
     }
-  }
-
-  public ArrayList<ArrayList<Cards>> getPlayerTable() {
-    return playerTable;
   }
 }

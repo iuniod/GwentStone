@@ -17,9 +17,19 @@ public class Firestorm extends Environment {
    * @param cards the list of cards on the row
    */
   @Override
-  public void action(final ArrayList<Cards> cards, final ArrayList<Cards> opponentCards) {
+  public void action(ArrayList<Cards> cards, ArrayList<Cards> opponentCards) {
+    ArrayList<Integer> indexes = new ArrayList<Integer>();
     for (Cards card : opponentCards) {
       card.setHealth(card.getHealth() - 1);
+      if (card.getHealth() <= 0) {
+        indexes.add(opponentCards.indexOf(card));
+      }
+    }
+
+    if (indexes.size() > 0) {
+      for (int i = indexes.size() - 1; i >= 0; i--) {
+        opponentCards.remove(indexes.get(i).intValue());
+      }
     }
   }
 }

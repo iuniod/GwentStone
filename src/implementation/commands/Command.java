@@ -7,22 +7,22 @@ import implementation.GameSimulation.GameSimulation;
 public abstract class Command {
   private String commandName = null;
   private String errorMessage = null;
-  private int index = -1;
-  private int player = -1;
+  private int index1 = -1;
+  private int index2 = -1;
 
   public Command(final String commandName) {
     this.commandName = commandName;
   }
 
-  public Command(final String commandName, final int index) {
+  public Command(final String commandName, final int index1) {
     this.commandName = commandName;
-    this.index = index;
+    this.index1 = index1;
   }
 
-  public Command(final String commandName, final int index, final int player) {
+  public Command(final String commandName, final int index1, final int index2) {
     this.commandName = commandName;
-    this.index = index;
-    this.player = player;
+    this.index1 = index1;
+    this.index2 = index2;
   }
 
   /**
@@ -61,11 +61,11 @@ public abstract class Command {
    *
    * @return The index.
    */
-  public int getIndex() {
-    return index;
+  public int getIndex1() {
+    return index1;
   }
 
-  public int getPlayer() {
-    return player;
+  public int getIndex2() {
+    return index2;
   }
 }

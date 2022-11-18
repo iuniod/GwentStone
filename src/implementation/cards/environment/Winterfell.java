@@ -17,7 +17,7 @@ public class Winterfell extends Environment {
    * @param cards the list of cards on the row
    */
   @Override
-  public void action(final ArrayList<Cards> cards, final ArrayList<Cards> opponentCards) {
+  public void action(ArrayList<Cards> cards, ArrayList<Cards> opponentCards) {
     for (Cards card : opponentCards) {
       card.freeze();
     }
