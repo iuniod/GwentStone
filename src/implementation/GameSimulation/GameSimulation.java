@@ -1,8 +1,7 @@
 package implementation.GameSimulation;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
+
 import fileio.CardInput;
 import implementation.cards.Cards;
 
@@ -10,40 +9,64 @@ import implementation.cards.Cards;
  * Class that simulates the game.
  */
 public final class GameSimulation {
-  private ArrayList<Cards> playerOneHand = new ArrayList<Cards>();
-  private ArrayList<Cards> playerTwoHand = new ArrayList<Cards>();
-
-  private ArrayList<ArrayList<Cards>> playerOneTable = null;
-  private ArrayList<ArrayList<Cards>> playerTwoTable = null;
-  private Cards playerOneHero;
-  private Cards playerTwoHero;
-  private int playerOneMana = 0;
-  private int playerTwoMana = 0;
+  private Player playerOne = null;
+  private Player playerTwo = null;
   private int playerTurn = 0;
+  private int round = 0;
+  private int turn = 0;
 
   public GameSimulation(final ArrayList<CardInput> playerOneHand, final CardInput playerOneHero,
                         final ArrayList<CardInput> playerTwoHand, final CardInput playerTwoHero,
-                        final int playerTurn) {
-
-    for (CardInput itCard : playerOneHand) {
-      this.playerOneHand.add(new Cards(itCard));
-    }
-    this.playerOneHero = new Cards(playerOneHero);
-
-    for (CardInput itCard : playerTwoHand) {
-      this.playerTwoHand.add(new Cards(itCard));
-    }
-    this.playerTwoHero = new Cards(playerTwoHero);
-
+                        final int playerTurn, final int seed) {
+    playerOne = new Player(playerOneHand, playerOneHero, seed);
+    playerTwo = new Player(playerTwoHand, playerTwoHero, seed);
     this.playerTurn = playerTurn;
+    this.round = 1;
+    this.turn = 0;
+    playerOne.setPlayerMana(1);
+    playerTwo.setPlayerMana(1);
   }
 
+
   /**
-   * Method that shuffles the hands of the players.
-   * @param seed the seed used to shuffle the hands (in input file)
+   * Method that returns the player according to the index.
+   *
+   * @param player The index of the player.
+   * @return The player.
    */
-  public void shuffleHands(final Random seed) {
-    Collections.shuffle(playerOneHand, seed);
-    Collections.shuffle(playerTwoHand, seed);
+  public Player getPlayer(final int player) {
+    return player == 1 ? playerOne : playerTwo;
+  }
+
+  public int getPlayerTurn() {
+    return playerTurn;
+  }
+
+  public int getTurn() {
+    return turn;
+  }
+
+  public void setTurn(final int turn) {
+    this.turn = turn;
+  }
+
+  public void setPlayerTurn() {
+    if (playerTurn == 1) {
+      playerTurn = 2;
+    } else {
+      playerTurn = 1;
+    }
+  }
+
+  public int getTotalGamesPlayed() {
+    return playerOne.getPlayerWins() + playerTwo.getPlayerWins();
+  }
+
+  public int getRound() {
+    return round;
+  }
+
+  public void addRound() {
+    round++;
   }
 }

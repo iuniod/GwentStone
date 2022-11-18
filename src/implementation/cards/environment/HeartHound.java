@@ -2,9 +2,10 @@ package implementation.cards.environment;
 
 import fileio.CardInput;
 import implementation.cards.Cards;
+
 import java.util.ArrayList;
 
-public class HeartHound extends Cards implements Environment {
+public class HeartHound extends Environment {
 
   public HeartHound(final CardInput card) {
     super(card);
@@ -13,6 +14,7 @@ public class HeartHound extends Cards implements Environment {
   /**
    * The opponent's minion with the highest life on the row is stolen
    * and placed on the player's "mirrored" row.
+   *
    * @param cards the list of cards on the row
    */
   @Override

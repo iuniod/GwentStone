@@ -1,18 +1,22 @@
 package implementation;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import java.util.Random;
-import fileio.Input;
+import fileio.ActionsInput;
 import fileio.GameInput;
+import fileio.Input;
 import implementation.GameSimulation.GameSimulation;
+import implementation.commands.*;
+import java.util.*;
 
 public final class Implementation {
   /**
    * The entry point to the implementation. It is called by the checker.
+   *
    * @param inputData the input data
-   * @param output the output data
+   * @param output    the output data
    */
-  public void run(final Input inputData, final ArrayNode output) {
+  public void run(final Input inputData, final ArrayNode output, final ObjectMapper objectMapper) {
     /**
      * Iterate through the rounds and play them. The output is written in the output parameter.
      */
@@ -25,10 +29,69 @@ public final class Implementation {
           itGame.getStartGame().getPlayerOneHero(),
           inputData.getPlayerTwoDecks().getDecks().get(itGame.getStartGame().getPlayerTwoDeckIdx()),
           itGame.getStartGame().getPlayerTwoHero(),
-          itGame.getStartGame().getStartingPlayer()
+          itGame.getStartGame().getStartingPlayer(),
+          itGame.getStartGame().getShuffleSeed()
       );
 
-      game.shuffleHands(new Random(itGame.getStartGame().getShuffleSeed()));
+      /**
+       * Iterate through the actions and play them.
+       */
+      for (ActionsInput itAction : itGame.getActions()) {
+        switch (itAction.getCommand()) {
+          case "getPlayerDeck":
+            GetPlayerDeck getPlayerDeck = new GetPlayerDeck(itAction.getCommand(),
+                itAction.getPlayerIdx());
+            getPlayerDeck.run(game, objectMapper, output);
+            break;
+          case "getPlayerHero":
+            GetPlayerHero getPlayerHero = new GetPlayerHero(itAction.getCommand(),
+                itAction.getPlayerIdx());
+            getPlayerHero.run(game, objectMapper, output);
+            break;
+          case "endPlayerTurn":
+            EndPlayerTurn endPlayerTurn = new EndPlayerTurn(itAction.getCommand());
+            endPlayerTurn.run(game, objectMapper, output);
+            break;
+          case "getPlayerTurn":
+            GetPlayerTurn getPlayerTurn = new GetPlayerTurn(itAction.getCommand(),
+                itAction.getPlayerIdx());
+            getPlayerTurn.run(game, objectMapper, output);
+            break;
+          case "getPlayerMana":
+            GetPlayerMana getPlayerMana = new GetPlayerMana(itAction.getCommand(),
+                itAction.getPlayerIdx());
+            getPlayerMana.run(game, objectMapper, output);
+            break;
+          case "getTotalGamesPlayed":
+            GetTotalGamesPlayed getGamesPlayed = new GetTotalGamesPlayed(itAction.getCommand());
+            getGamesPlayed.run(game, objectMapper, output);
+            break;
+          case "getPlayerOneWins":
+            GetPlayerOneWins getPlayerOneWins = new GetPlayerOneWins(itAction.getCommand());
+            getPlayerOneWins.run(game, objectMapper, output);
+            break;
+          case "getPlayerTwoWins":
+            GetPlayerTwoWins getPlayerTwoWins = new GetPlayerTwoWins(itAction.getCommand());
+            getPlayerTwoWins.run(game, objectMapper, output);
+            break;
+          case "placeCard":
+            PlaceCard placeCard = new PlaceCard(itAction.getCommand(), itAction.getHandIdx(),
+                game.getPlayerTurn());
+            placeCard.run(game, objectMapper, output);
+            break;
+          case "getCardsInHand":
+            GetCardsInHand getCardsInHand = new GetCardsInHand(itAction.getCommand(),
+                itAction.getPlayerIdx());
+            getCardsInHand.run(game, objectMapper, output);
+            break;
+          case "getCardsOnTable":
+            GetCardsOnTable getCardsOnTable = new GetCardsOnTable(itAction.getCommand());
+            getCardsOnTable.run(game, objectMapper, output);
+            break;
+          default:
+            break;
+        }
+      }
     }
   }
 }

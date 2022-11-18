@@ -4,7 +4,7 @@ import implementation.cards.Cards;
 import implementation.cards.minion.Minion;
 import fileio.CardInput;
 
-public final class Miraj extends Cards implements Minion, SpecialMinion {
+public final class Miraj extends Minion implements SpecialMinion {
   private int rowPermission;
 
   public Miraj(final CardInput card) {
@@ -13,6 +13,7 @@ public final class Miraj extends Cards implements Minion, SpecialMinion {
 
   /**
    * swap between his life and the life of an opposing minion.
+   *
    * @param card the card that will be affected by the ability
    */
   @Override
@@ -23,7 +24,7 @@ public final class Miraj extends Cards implements Minion, SpecialMinion {
   }
 
   @Override
-  public void setRowPermission() {
-    rowPermission = 0;
+  public int RowPermission() {
+    return  1;
   }
 }

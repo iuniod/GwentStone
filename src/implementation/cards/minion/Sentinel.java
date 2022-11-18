@@ -1,17 +1,14 @@
 package implementation.cards.minion;
 
 import fileio.CardInput;
-import implementation.cards.Cards;
 
-public final class Sentinel extends Cards implements Minion {
-  private int rowPermission;
-
+public final class Sentinel extends Minion {
   public Sentinel(final CardInput card) {
     super(card);
   }
 
   @Override
-  public void setRowPermission() {
-    rowPermission = 1;
+  public int RowPermission() {
+    return 0;
   }
 }

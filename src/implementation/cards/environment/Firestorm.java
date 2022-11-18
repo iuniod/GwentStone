@@ -2,9 +2,10 @@ package implementation.cards.environment;
 
 import fileio.CardInput;
 import implementation.cards.Cards;
+
 import java.util.ArrayList;
 
-public class Firestorm extends Cards implements Environment {
+public class Firestorm extends Environment {
 
   public Firestorm(final CardInput card) {
     super(card);
@@ -12,6 +13,7 @@ public class Firestorm extends Cards implements Environment {
 
   /**
    * Decreases the health of all cards on the row by 1.
+   *
    * @param cards the list of cards on the row
    */
   @Override

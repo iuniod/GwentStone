@@ -2,9 +2,10 @@ package implementation.cards.environment;
 
 import fileio.CardInput;
 import implementation.cards.Cards;
+
 import java.util.ArrayList;
 
-public class Winterfell extends Cards implements Environment {
+public class Winterfell extends Environment {
 
   public Winterfell(final CardInput card) {
     super(card);
@@ -12,6 +13,7 @@ public class Winterfell extends Cards implements Environment {
 
   /**
    * Freezes all the cards on the row.
+   *
    * @param cards the list of cards on the row
    */
   @Override

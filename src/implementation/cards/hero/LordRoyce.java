@@ -2,15 +2,17 @@ package implementation.cards.hero;
 
 import fileio.CardInput;
 import implementation.cards.Cards;
+
 import java.util.ArrayList;
 
-public final class LordRoyce extends Cards implements Hero {
+public final class LordRoyce extends Hero {
   public LordRoyce(final CardInput card) {
     super(card);
   }
 
   /**
    * freezes the card with the highest attack on the row.
+   *
    * @param opponentCards the opponent's cards
    */
   @Override

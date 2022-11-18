@@ -2,15 +2,17 @@ package implementation.cards.hero;
 
 import implementation.cards.Cards;
 import fileio.CardInput;
+
 import java.util.ArrayList;
 
-public class EmpressThorina extends Cards implements Hero {
+public class EmpressThorina extends Hero {
   public EmpressThorina(final CardInput cardInput) {
     super(cardInput);
   }
 
   /**
    * destroys the card with the highest life in a row.
+   *
    * @param opponentCards the opponent's cards
    */
   @Override

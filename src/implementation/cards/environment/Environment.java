@@ -1,20 +1,55 @@
 package implementation.cards.environment;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import fileio.CardInput;
 import implementation.cards.Cards;
 
 import java.util.ArrayList;
 
-/**
- * Interface that contains the environment's ability.
- */
-public interface Environment {
+
+public abstract class Environment extends Cards {
+  private static final ArrayList<String> environmentCards = new ArrayList<String>() {{
+    add("Firestorm");
+    add("Winterfell");
+    add("Heart Hound");
+  }};
+
+  public static boolean isEnvironmentCard(final String cardName) {
+    return environmentCards.contains(cardName);
+  }
+  public Environment(final CardInput card) {
+    super(card);
+  }
+
   /**
-   * Method that contains the environment's ability.
-   * @param cards the list of cards on the row
-   * @param opponentCards the list of cards on the opponent's row
-   * !!! We use only opoponentCards for Firestorm and Winterfell because
-   *                      we modify the opponent's cards, but we also use cards for HeartHound
-   *                      because we take the card from the opponent's row and put it on our row.
+   * Method that run the special ability of the card.
+   *
+   * @param cards         the list of player's cards
+   * @param opponentCards the list of opponent's cards
    */
-  void action(ArrayList<Cards> cards, ArrayList<Cards> opponentCards);
+  public abstract void action(ArrayList<Cards> cards, ArrayList<Cards> opponentCards);
+
+  /**
+   * Method that returns the Environment card as a ObjectNode.
+   *
+   * @param objectMapper object mapper
+   * @return the ObjectNode that contains the card's details
+   */
+  public ObjectNode writeToFile(final ObjectMapper objectMapper) {
+    ObjectNode card = objectMapper.createObjectNode();
+    ArrayNode colors = objectMapper.createArrayNode();
+
+    card.put("mana", getMana());
+    card.put("description", getDescription());
+
+    for (String color : getColors()) {
+      colors.add(color);
+    }
+    card.put("colors", colors);
+    card.put("name", getName());
+
+    return card;
+  }
 }

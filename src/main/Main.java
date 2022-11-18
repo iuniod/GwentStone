@@ -70,11 +70,10 @@ public final class Main {
                 Input.class);
 
         ArrayNode output = objectMapper.createArrayNode();
-
         //TODO add here the entry point to your implementation
 
         Implementation myMain = new Implementation();
-        myMain.run(inputData, output);
+        myMain.run(inputData, output, objectMapper);
 
         ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
         objectWriter.writeValue(new File(filePath2), output);

@@ -1,6 +1,10 @@
 package implementation.cards;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.CardInput;
+
 import java.util.ArrayList;
 
 public class Cards {
@@ -22,8 +26,19 @@ public class Cards {
     this.isFrozen = false;
   }
 
+  public Cards(final Cards card) {
+    this.mana = card.getMana();
+    this.health = card.getHealth();
+    this.attackDamage = card.getAttackDamage();
+    this.name = card.getName();
+    this.description = card.getDescription();
+    this.colors = card.getColors();
+    this.isFrozen = card.getIsFrozen();
+  }
+
   /**
    * Method that returns the mana cost of the card.
+   *
    * @return the mana cost of the card
    */
   public int getMana() {
@@ -32,6 +47,7 @@ public class Cards {
 
   /**
    * Method that sets the mana cost of the card.
+   *
    * @param mana the new mana cost of the card
    */
   public void setMana(final int mana) {
@@ -40,6 +56,7 @@ public class Cards {
 
   /**
    * Method that returns the health of the card.
+   *
    * @return the health of the card
    */
   public int getHealth() {
@@ -48,6 +65,7 @@ public class Cards {
 
   /**
    * Method that sets the health of the card.
+   *
    * @param health the new health of the card
    */
   public void setHealth(final int health) {
@@ -56,6 +74,7 @@ public class Cards {
 
   /**
    * Method that returns the attackDamage of the card.
+   *
    * @return the attack attackDamage of the card
    */
   public int getAttackDamage() {
@@ -64,6 +83,7 @@ public class Cards {
 
   /**
    * Method that sets the attackDamage of the card.
+   *
    * @param attackDamage the new attackDamage of the card
    */
   public void setAttackDamage(final int attackDamage) {
@@ -72,6 +92,7 @@ public class Cards {
 
   /**
    * Method that returns the name of the card.
+   *
    * @return the name of the card
    */
   public String getName() {
@@ -80,6 +101,7 @@ public class Cards {
 
   /**
    * Method that sets the name of the card.
+   *
    * @param name the new name of the card
    */
   public void setName(final String name) {
@@ -88,6 +110,7 @@ public class Cards {
 
   /**
    * Method that returns the description of the card.
+   *
    * @return the description of the card
    */
   public String getDescription() {
@@ -96,6 +119,7 @@ public class Cards {
 
   /**
    * Method that sets the description of the card.
+   *
    * @param description the new description of the card
    */
   public void setDescription(final String description) {
@@ -104,6 +128,7 @@ public class Cards {
 
   /**
    * Method that returns the colors of the card.
+   *
    * @return the colors of the card
    */
   public ArrayList<String> getColors() {
@@ -112,6 +137,7 @@ public class Cards {
 
   /**
    * Method that sets the colors of the card.
+   *
    * @param colors the new colors of the card
    */
   public void setColors(final ArrayList<String> colors) {
@@ -120,6 +146,7 @@ public class Cards {
 
   /**
    * Method that returns the frozen status of the card.
+   *
    * @return the frozen status of the card
    */
   public boolean getIsFrozen() {
@@ -138,5 +165,29 @@ public class Cards {
    */
   public void unfreeze() {
     isFrozen = false;
+  }
+
+  /**
+   * Method that returns the card as a ObjectNode.
+   *
+   * @param objectMapper the object mapper
+   * @return the card as a ObjectNode
+   */
+  public ObjectNode writeToFile(final ObjectMapper objectMapper) {
+    ObjectNode card = objectMapper.createObjectNode();
+    ArrayNode colorArray = objectMapper.createArrayNode();
+
+    card.put("mana", getMana());
+    card.put("attackDamage", getAttackDamage());
+    card.put("health", getHealth());
+    card.put("description", getDescription());
+
+    for (String color : getColors()) {
+      colorArray.add(color);
+    }
+    card.put("colors", colorArray);
+    card.put("name", getName());
+
+    return card;
   }
 }

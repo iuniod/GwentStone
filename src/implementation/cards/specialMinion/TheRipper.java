@@ -4,7 +4,7 @@ import fileio.CardInput;
 import implementation.cards.Cards;
 import implementation.cards.minion.Minion;
 
-public final class TheRipper extends Cards implements Minion, SpecialMinion {
+public final class TheRipper extends Minion implements SpecialMinion {
   private int rowPermission;
 
   public TheRipper(final CardInput card) {
@@ -13,6 +13,7 @@ public final class TheRipper extends Cards implements Minion, SpecialMinion {
 
   /**
    * -2 attack for an opposing minion.
+   *
    * @param card the card that will be affected by the ability
    */
   @Override
@@ -21,7 +22,7 @@ public final class TheRipper extends Cards implements Minion, SpecialMinion {
   }
 
   @Override
-  public void setRowPermission() {
-    rowPermission = 0;
+  public int RowPermission() {
+    return 1;
   }
 }

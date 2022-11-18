@@ -7,7 +7,8 @@ import implementation.cards.Cards;
  */
 public interface SpecialMinion {
   /**
-   * Method that contains the special minion's ability.
+   * Method that run the special minion's ability.
+   *
    * @param card the card that will be affected by the ability
    */
   void ability(Cards card);
