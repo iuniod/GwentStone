@@ -7,7 +7,7 @@ import fileio.GameInput;
 import fileio.Input;
 import implementation.GameSimulation.GameSimulation;
 import implementation.commands.*;
-import java.util.*;
+import implementation.commands.debugging.*;
 
 public final class Implementation {
   /**
@@ -39,102 +39,78 @@ public final class Implementation {
       /**
        * Iterate through the actions and play them.
        */
-
       for (ActionsInput itAction : itGame.getActions()) {
-        boolean endGame = false;
+        Command command = null;
         switch (itAction.getCommand()) {
           case "getPlayerDeck":
-            GetPlayerDeck getPlayerDeck = new GetPlayerDeck(itAction.getCommand(),
+            command = new GetPlayerDeck(itAction.getCommand(),
                 itAction.getPlayerIdx());
-            getPlayerDeck.run(game, objectMapper, output);
             break;
           case "getPlayerHero":
-            GetPlayerHero getPlayerHero = new GetPlayerHero(itAction.getCommand(),
-                itAction.getPlayerIdx());
-            getPlayerHero.run(game, objectMapper, output);
+            command = new GetPlayerHero(itAction.getCommand(), itAction.getPlayerIdx());
             break;
           case "endPlayerTurn":
-            EndPlayerTurn endPlayerTurn = new EndPlayerTurn(itAction.getCommand());
-            endPlayerTurn.run(game, objectMapper, output);
+            command = new EndPlayerTurn(itAction.getCommand());
             break;
           case "getPlayerTurn":
-            GetPlayerTurn getPlayerTurn = new GetPlayerTurn(itAction.getCommand());
-            getPlayerTurn.run(game, objectMapper, output);
+            command = new GetPlayerTurn(itAction.getCommand());
             break;
           case "getPlayerMana":
-            GetPlayerMana getPlayerMana = new GetPlayerMana(itAction.getCommand(),
-                itAction.getPlayerIdx());
-            getPlayerMana.run(game, objectMapper, output);
+            command = new GetPlayerMana(itAction.getCommand(), itAction.getPlayerIdx());
             break;
           case "getTotalGamesPlayed":
-            GetTotalGamesPlayed getGamesPlayed = new GetTotalGamesPlayed(itAction.getCommand());
-            getGamesPlayed.run(game, objectMapper, output);
+            command = new GetTotalGamesPlayed(itAction.getCommand());
             break;
           case "getPlayerOneWins":
-            GetPlayerOneWins getPlayerOneWins = new GetPlayerOneWins(itAction.getCommand());
-            getPlayerOneWins.run(game, objectMapper, output);
+            command = new GetPlayerOneWins(itAction.getCommand());
             break;
           case "getPlayerTwoWins":
-            GetPlayerTwoWins getPlayerTwoWins = new GetPlayerTwoWins(itAction.getCommand());
-            getPlayerTwoWins.run(game, objectMapper, output);
+            command = new GetPlayerTwoWins(itAction.getCommand());
             break;
           case "placeCard":
-            PlaceCard placeCard = new PlaceCard(itAction.getCommand(), itAction.getHandIdx());
-            placeCard.run(game, objectMapper, output);
+            command = new PlaceCard(itAction.getCommand(), itAction.getHandIdx());
             break;
           case "getCardsInHand":
-            GetCardsInHand getCardsInHand = new GetCardsInHand(itAction.getCommand(),
-                itAction.getPlayerIdx());
-            getCardsInHand.run(game, objectMapper, output);
+            command = new GetCardsInHand(itAction.getCommand(), itAction.getPlayerIdx());
             break;
           case "getCardsOnTable":
-            GetCardsOnTable getCardsOnTable = new GetCardsOnTable(itAction.getCommand());
-            getCardsOnTable.run(game, objectMapper, output);
+            command = new GetCardsOnTable(itAction.getCommand());
             break;
           case "getEnvironmentCardsInHand":
-            GetEnvironmentCardsInHand getEnvironmentCardsInHand = new GetEnvironmentCardsInHand(
-                itAction.getCommand(), itAction.getPlayerIdx());
-            getEnvironmentCardsInHand.run(game, objectMapper, output);
+            command = new GetEnvironmentCardsInHand(itAction.getCommand(), itAction.getPlayerIdx());
             break;
           case "useEnvironmentCard":
-            UseEnvironmentCard useEnvironmentCard = new UseEnvironmentCard(itAction.getCommand(),
-                itAction.getHandIdx(), itAction.getAffectedRow());
-            useEnvironmentCard.run(game, objectMapper, output);
+            command = new UseEnvironmentCard(itAction.getCommand(), itAction.getHandIdx(),
+                itAction.getAffectedRow());
             break;
           case "getCardAtPosition":
-            GetCardAtPosition getCardAtPosition = new GetCardAtPosition(itAction.getCommand(),
+            command = new GetCardAtPosition(itAction.getCommand(),
                 itAction.getX(), itAction.getY());
-            getCardAtPosition.run(game, objectMapper, output);
             break;
           case "getFrozenCardsOnTable":
-            GetFrozenCardsOnTable getFrozenCardsOnTable = new GetFrozenCardsOnTable(
-                itAction.getCommand());
-            getFrozenCardsOnTable.run(game, objectMapper, output);
+            command = new GetFrozenCardsOnTable(itAction.getCommand());
             break;
           case "cardUsesAttack":
-            CardUsesAttack cardUsesAttack = new CardUsesAttack(itAction.getCommand(),
+            command = new CardUsesAttack(itAction.getCommand(),
                 itAction.getCardAttacker().getX(), itAction.getCardAttacker().getY(),
                 itAction.getCardAttacked().getX(), itAction.getCardAttacked().getY());
-            cardUsesAttack.run(game, objectMapper, output);
             break;
           case "cardUsesAbility":
-            CardUsesAbility cardUsesAbility = new CardUsesAbility(itAction.getCommand(),
+            command = new CardUsesAbility(itAction.getCommand(),
                 itAction.getCardAttacker().getX(), itAction.getCardAttacker().getY(),
                 itAction.getCardAttacked().getX(), itAction.getCardAttacked().getY());
-            cardUsesAbility.run(game, objectMapper, output);
             break;
           case "useAttackHero":
-            UseAttackHero useAttackHero = new UseAttackHero(itAction.getCommand(),
+            command = new UseAttackHero(itAction.getCommand(),
                 itAction.getCardAttacker().getX(), itAction.getCardAttacker().getY());
-            useAttackHero.run(game, objectMapper, output);
             break;
-            case "useHeroAbility":
-            UseHeroAbility useHeroAbility = new UseHeroAbility(itAction.getCommand(),
-                itAction.getAffectedRow());
-            useHeroAbility.run(game, objectMapper, output);
+          case "useHeroAbility":
+            command = new UseHeroAbility(itAction.getCommand(), itAction.getAffectedRow());
+            break;
           default:
             break;
         }
+        command.run(game, objectMapper, output);
       }
     }
   }

@@ -5,10 +5,13 @@ import implementation.cards.Cards;
 import implementation.cards.minion.Minion;
 
 public final class TheRipper extends Minion implements SpecialMinion {
-  private int rowPermission;
-
   public TheRipper(final CardInput card) {
     super(card);
+  }
+
+  @Override
+  public int rowPermission() {
+    return 1;
   }
 
   /**
@@ -22,10 +25,5 @@ public final class TheRipper extends Minion implements SpecialMinion {
     if (card.getAttackDamage() < 0) {
       card.setAttackDamage(0);
     }
-  }
-
-  @Override
-  public int RowPermission() {
-    return 1;
   }
 }

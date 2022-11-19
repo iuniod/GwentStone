@@ -15,29 +15,28 @@ public class Cards {
   private String description;
   private ArrayList<String> colors;
   private boolean isFrozen;
-
   private boolean hasAttacked;
 
   public Cards(final CardInput card) {
-    this.mana = card.getMana();
-    this.health = card.getHealth();
-    this.attackDamage = card.getAttackDamage();
-    this.name = card.getName();
-    this.description = card.getDescription();
-    this.colors = card.getColors();
-    this.isFrozen = false;
-    this.hasAttacked = false;
+    mana = card.getMana();
+    health = card.getHealth();
+    attackDamage = card.getAttackDamage();
+    name = card.getName();
+    description = card.getDescription();
+    colors = card.getColors();
+    isFrozen = false;
+    hasAttacked = false;
   }
 
   public Cards(final Cards card) {
-    this.mana = card.getMana();
-    this.health = card.getHealth();
-    this.attackDamage = card.getAttackDamage();
-    this.name = card.getName();
-    this.description = card.getDescription();
-    this.colors = card.getColors();
-    this.isFrozen = card.getIsFrozen();
-    this.hasAttacked = card.getHasAttacked();
+    mana = card.getMana();
+    health = card.getHealth();
+    attackDamage = card.getAttackDamage();
+    name = card.getName();
+    description = card.getDescription();
+    colors = card.getColors();
+    isFrozen = card.getIsFrozen();
+    hasAttacked = card.getHasAttacked();
   }
 
   /**
@@ -171,14 +170,26 @@ public class Cards {
     isFrozen = false;
   }
 
+  /**
+   * Method that returns the attacked status of the card.
+   *
+   * @return the attacked status of the card
+   */
   public boolean getHasAttacked() {
     return hasAttacked;
   }
 
+  /**
+   * Method that sets the hasAttacked status of the card as true, meaning the card has attacked
+   */
   public void setAttacked() {
     hasAttacked = true;
   }
 
+  /**
+   * Method that reset the hasAttacked status of the card.
+   * This method is called at the end of each turn to reset the hasAttacked status of all the cards.
+   */
   public void resetHasAttacked() {
     hasAttacked = false;
   }

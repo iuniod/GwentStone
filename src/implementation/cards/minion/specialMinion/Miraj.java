@@ -5,10 +5,13 @@ import implementation.cards.minion.Minion;
 import fileio.CardInput;
 
 public final class Miraj extends Minion implements SpecialMinion {
-  private int rowPermission;
-
   public Miraj(final CardInput card) {
     super(card);
+  }
+
+  @Override
+  public int rowPermission() {
+    return 1;
   }
 
   /**
@@ -21,10 +24,5 @@ public final class Miraj extends Minion implements SpecialMinion {
     int tmp = getHealth();
     setHealth(card.getHealth());
     card.setHealth(tmp);
-  }
-
-  @Override
-  public int RowPermission() {
-    return  1;
   }
 }

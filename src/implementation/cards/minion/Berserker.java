@@ -8,7 +8,7 @@ public final class Berserker extends Minion {
   }
 
   @Override
-  public int RowPermission() {
+  public int rowPermission() {
     return 0;
   }
 }

@@ -12,54 +12,52 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UseEnvironmentCard extends Command {
-  public UseEnvironmentCard(String command, int index, int player) {
+  public UseEnvironmentCard(final String command, final int index, final int player) {
     super(command, index, player);
   }
 
-  @Override
-  public void run(GameSimulation game, ObjectMapper objectMapper, ArrayNode output) {
+  private String findError(final GameSimulation game, final Player player, final Cards card,
+                           final int playerRow, final int affectedRow) {
     int playerIdx = game.getPlayerTurn();
-    int affectedRow = getIndex2();
-    int playerRow;
-    switch (affectedRow) {
-      case 0:
-        playerRow = 3;
-        break;
-      case 1:
-        playerRow = 2;
-        break;
-      case 2:
-        playerRow = 1;
-        break;
-      case 3:
-        playerRow = 0;
-        break;
-      default:
-        playerRow = -1;
-        break;
+    if (!Environment.isEnvironmentCard(card.getName())) {
+      return "Chosen card is not of type environment.";
+    } else if (card.getMana() > player.getPlayerMana()) {
+      return "Not enough mana to use environment card.";
+    } else if ((playerIdx == 1 && affectedRow >= 2) || (playerIdx == 2 && affectedRow <= 1)) {
+      return "Chosen row does not belong to the enemy.";
+    } else if (card.getName().equals("Heart Hound")
+                   && game.getTable().get(playerRow).size() == Player.MAX_ROW_SIZE) {
+      return "Cannot steal enemy card since the player's row is full.";
     }
-    Player player = game.getPlayer(playerIdx);
+
+    return null;
+  }
+
+  /**
+   * Executes the command useEnvironmentCard.
+   * @param game         The game simulation.
+   * @param objectMapper The object mapper.
+   * @param output       The output.
+   */
+  @Override
+  public void run(final GameSimulation game, final ObjectMapper objectMapper,
+                  final ArrayNode output) {
+    int affectedRow = getIndex2();
+    int playerRow = switch (affectedRow) {
+      case 0 -> 3;
+      case 1 -> 2;
+      case 2 -> 1;
+      case 3 -> 0;
+      default -> -1;
+    };
+    Player player = game.getPlayer(game.getPlayerTurn());
     Cards cardEnvironment = player.getPlayerHand().get(getIndex1());
 
     if (cardEnvironment.getIsFrozen()) {
       return;
     }
 
-    if (!Environment.isEnvironmentCard(cardEnvironment.getName())) {
-      setErrorMessage("Chosen card is not of type environment.");
-    } else if (cardEnvironment.getMana() > player.getPlayerMana()) {
-      setErrorMessage("Not enough mana to use environment card.");
-    } else if ((playerIdx == 1 && affectedRow >= 2) || (playerIdx == 2 && affectedRow <= 1)) {
-      setErrorMessage("Chosen row does not belong to the enemy.");
-    } else if (cardEnvironment.getName().equals("Heart Hound") && game.getTable().get(playerRow).size() == 5) {
-      setErrorMessage("Cannot steal enemy card since the player's row is full.");
-    } else {
-      Environment environment = (Environment) cardEnvironment;
-      List<ArrayList<Cards>> table = game.getTable();
-      environment.action(table.get(playerRow), table.get(affectedRow));
-      player.setPlayerMana(-1 * cardEnvironment.getMana());
-      player.getPlayerHand().remove(getIndex1());
-    }
+    setErrorMessage(findError(game, player, cardEnvironment, playerRow, affectedRow));
 
     if (getErrorMessage() != null) {
       ObjectNode out = objectMapper.createObjectNode();
@@ -69,6 +67,12 @@ public class UseEnvironmentCard extends Command {
       out.put("handIdx", getIndex1());
 
       output.add(out);
+    } else {
+      Environment environment = (Environment) cardEnvironment;
+      List<ArrayList<Cards>> table = game.getTable();
+      environment.action(table.get(playerRow), table.get(affectedRow));
+      player.setPlayerMana(-1 * cardEnvironment.getMana());
+      player.getPlayerHand().remove(getIndex1());
     }
   }
 }

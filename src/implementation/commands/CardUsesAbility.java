@@ -8,15 +8,46 @@ import implementation.cards.Cards;
 import implementation.cards.minion.Minion;
 import implementation.cards.minion.specialMinion.SpecialMinion;
 
-import java.util.ArrayList;
-
 public class CardUsesAbility extends Command {
   public CardUsesAbility(final String command, final int xAttacker, final int yAttacker,
                          final int xAttacked, final int yAttacked) {
     super(command, xAttacker, yAttacker, xAttacked, yAttacked);
   }
 
-  private void writeError(ObjectMapper objectMapper, ArrayNode output) {
+  private String findError(final GameSimulation game, final Cards attacker, final Cards attacked) {
+    int xAttacker = getIndex1();
+    int xAttacked = getIndex3();
+
+    if (attacker.getIsFrozen()) {
+      return "Attacker card is frozen.";
+    } else if (attacker.getHasAttacked()) {
+      return "Attacker card has already attacked this turn.";
+    } else {
+      boolean belongsToEnemy = (xAttacker <= 1 && xAttacked > 1)
+                                   || (xAttacker > 1 && xAttacked <= 1);
+      if (attacker.getName().equals("Disciple")) {
+        if (belongsToEnemy) {
+          return "Attacked card does not belong to the current player.";
+        }
+      } else if (Minion.isSpecialMinionCard(attacker.getName())) {
+        int playerIdx = (xAttacker <= 1 ? 2 : 1);
+        if (!belongsToEnemy) {
+          return "Attacked card does not belong to the enemy.";
+        } else if (!Minion.checkTankAttacker(game.getTable(), attacked.getName(), playerIdx)) {
+          return "Attacked card is not of type 'Tank'.";
+        }
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * Method that writes the command error to the JSON file.
+   * @param objectMapper the object mapper
+   * @param output the output
+   */
+  private void writeError(final ObjectMapper objectMapper, final ArrayNode output) {
     ObjectNode out = objectMapper.createObjectNode();
     ObjectNode coordinates = objectMapper.createObjectNode();
     out.put("command", getCommandName());
@@ -31,51 +62,30 @@ public class CardUsesAbility extends Command {
     output.add(out);
   }
 
+  /**
+   * Executes the command cardUsesAbility.
+   *
+   * @param game         The game simulation.
+   * @param objectMapper The object mapper.
+   * @param output       The output.
+   */
   @Override
-  public void run(GameSimulation game, ObjectMapper objectMapper, ArrayNode output) {
-    int xAttacker = getIndex1();
-    int xAttacked = getIndex3();
-    int yAttacker = getIndex2();
-    int yAttacked = getIndex4();
-    Cards attacker = game.getTable().get(xAttacker).get(yAttacker);
-    Cards attacked = game.getTable().get(xAttacked).get(yAttacked);
+  public void run(final GameSimulation game, final ObjectMapper objectMapper,
+                  final ArrayNode output) {
+    Cards attacker = game.getTable().get(getIndex1()).get(getIndex2());
+    Cards attacked = game.getTable().get(getIndex3()).get(getIndex4());
 
-    if (attacker.getIsFrozen()) {
-      setErrorMessage("Attacker card is frozen.");
-    } else if (attacker.getHasAttacked()) {
-      setErrorMessage("Attacker card has already attacked this turn.");
-    }
-
+    setErrorMessage(findError(game, attacker, attacked));
     if (getErrorMessage() != null) {
       writeError(objectMapper, output);
-      return;
-    }
+    } else {
+      attacker.setAttacked();
+      SpecialMinion minion = (SpecialMinion) attacker;
+      minion.ability(attacked);
 
-    boolean belongsToEnemy = (xAttacker <= 1 && xAttacked > 1) || (xAttacker > 1 && xAttacked <= 1);
-    if (attacker.getName().equals("Disciple")) {
-      if (belongsToEnemy) {
-        setErrorMessage("Attacked card does not belong to the current player.");
+      if (attacked.getHealth() <= 0) {
+        game.getTable().get(getIndex3()).remove(getIndex4());
       }
-    } else if (Minion.isSpecialMinionCard(attacker.getName())) {
-      ArrayList<ArrayList<Cards>> table = game.getTable();
-      int playerIdx = (xAttacker <= 1 ? 2 : 1);
-      if (!belongsToEnemy) {
-        setErrorMessage("Attacked card does not belong to the enemy.");
-      } else if (!Minion.checkTankAttacker(table, attacked.getName(), playerIdx)) {
-        setErrorMessage("Attacked card is not of type 'Tank'.");
-      }
-    }
-
-    if (getErrorMessage() != null) {
-      writeError(objectMapper, output);
-      return;
-    }
-
-    attacker.setAttacked();
-    SpecialMinion minion = (SpecialMinion) attacker;
-    minion.ability(attacked);
-    if (attacked.getHealth() <= 0) {
-      game.getTable().get(xAttacked).remove(yAttacked);
     }
   }
 }

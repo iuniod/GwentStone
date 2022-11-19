@@ -13,7 +13,7 @@ public final class GameSimulation {
   private Player playerTwo = null;
   private static int playerOneWins = 0;
   private static int playerTwoWins = 0;
-  ArrayList<ArrayList<Cards>> table = null;
+  private ArrayList<ArrayList<Cards>> table = null;
   private int playerTurn = 0;
   private int round = 0;
   private int turn = 0;
@@ -24,16 +24,15 @@ public final class GameSimulation {
     playerOne = new Player(playerOneHand, playerOneHero, seed, 1);
     playerTwo = new Player(playerTwoHand, playerTwoHero, seed, 2);
     table = new ArrayList<>();
-    for (int i = 0; i < 4; i++) {
+    for (int i = 1; i < Player.MAX_ROW_SIZE; i++) {
       table.add(new ArrayList<>());
     }
     this.playerTurn = playerTurn;
-    this.round = 1;
-    this.turn = 0;
+    round = 1;
+    turn = 0;
     playerOne.setPlayerMana(1);
     playerTwo.setPlayerMana(1);
   }
-
 
   /**
    * Method that returns the player according to the index.
@@ -49,12 +48,11 @@ public final class GameSimulation {
     return playerTurn;
   }
 
+  /**
+   * Method that change the player turn.
+   */
   public void setPlayerTurn() {
-    if (playerTurn == 1) {
-      playerTurn = 2;
-    } else {
-      playerTurn = 1;
-    }
+    playerTurn = (playerTurn == 1 ? 2 : 1);
   }
 
   public int getTurn() {
@@ -69,6 +67,9 @@ public final class GameSimulation {
     return round;
   }
 
+  /**
+   * Increases the round by one.
+   */
   public void addRound() {
     round++;
   }
@@ -81,26 +82,48 @@ public final class GameSimulation {
     return playerOneWins + playerTwoWins;
   }
 
+  /**
+   * Method that returns the number of wins for the first player.
+   *
+   * @return The number of wins for the first player.
+   */
   public int getPlayerOneWins() {
     return playerOneWins;
   }
 
+  /**
+   * Method that returns the number of wins of the second player.
+   *
+   * @return The number of wins of the second player.
+   */
   public int getPlayerTwoWins() {
     return playerTwoWins;
   }
 
+  /**
+   * Method that increases the number of wins of player one.
+   */
   public void addPlayerOneWins() {
     playerOneWins++;
   }
 
+  /**
+   * Method that increases the number of wins of player two.
+   */
   public void addPlayerTwoWins() {
     playerTwoWins++;
   }
 
+  /**
+   * Method that sets the playerOneWins to 0 at the beginning of games.
+   */
   public static void setPlayerOneWins() {
     playerOneWins = 0;
   }
 
+  /**
+   * Method that sets the playerTwoWins to 0 at the beginning of games.
+   */
   public static void setPlayerTwoWins() {
     playerTwoWins = 0;
   }

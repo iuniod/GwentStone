@@ -8,17 +8,22 @@ import implementation.cards.Cards;
 
 import java.util.ArrayList;
 
-
 public abstract class Environment extends Cards {
-  private static final ArrayList<String> environmentCards = new ArrayList<String>() {{
+  private static final ArrayList<String> ENVIRONMENT_CARDS = new ArrayList<String>() {{
     add("Firestorm");
     add("Winterfell");
     add("Heart Hound");
   }};
 
+  /**
+   * Verifies if the card is an environment card.
+   * @param cardName the name of the card
+   * @return true if the card is an environment card, false otherwise
+   */
   public static boolean isEnvironmentCard(final String cardName) {
-    return environmentCards.contains(cardName);
+    return ENVIRONMENT_CARDS.contains(cardName);
   }
+
   public Environment(final CardInput card) {
     super(card);
   }

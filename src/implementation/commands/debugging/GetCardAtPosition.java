@@ -1,10 +1,11 @@
-package implementation.commands;
+package implementation.commands.debugging;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import implementation.GameSimulation.GameSimulation;
 import implementation.cards.Cards;
+import implementation.commands.Command;
 
 import java.util.ArrayList;
 
@@ -14,8 +15,15 @@ public class GetCardAtPosition extends Command {
     super(commandName, x, y);
   }
 
+  /**
+   * Executes the command getCardAtPosition.
+   * @param game         The game simulation.
+   * @param objectMapper The object mapper.
+   * @param output       The output.
+   */
   @Override
-  public void run(GameSimulation game, ObjectMapper objectMapper, ArrayNode output) {
+  public void run(final GameSimulation game, final ObjectMapper objectMapper,
+                  final ArrayNode output) {
     ObjectNode out = objectMapper.createObjectNode();
     out.put("command", getCommandName());
     out.put("x", getIndex1());

@@ -1,6 +1,7 @@
 package implementation.cards.environment;
 
 import fileio.CardInput;
+import implementation.GameSimulation.Player;
 import implementation.cards.Cards;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class HeartHound extends Environment {
    * @param cards the list of cards on the row
    */
   @Override
-  public void action(ArrayList<Cards> cards, ArrayList<Cards> opponentCards) {
+  public void action(final ArrayList<Cards> cards, final ArrayList<Cards> opponentCards) {
     int maxHealth = -1;
     int index = -1;
     for (Cards card : opponentCards) {
@@ -31,7 +32,7 @@ public class HeartHound extends Environment {
     if (index != -1) {
       Cards stolenCard = opponentCards.get(index);
       opponentCards.remove(index);
-      if (cards.size() < 5) {
+      if (cards.size() < Player.MAX_ROW_SIZE) {
         cards.add(stolenCard);
       }
     }

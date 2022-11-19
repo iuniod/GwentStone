@@ -8,7 +8,7 @@ public final class Sentinel extends Minion {
   }
 
   @Override
-  public int RowPermission() {
+  public int rowPermission() {
     return 0;
   }
 }

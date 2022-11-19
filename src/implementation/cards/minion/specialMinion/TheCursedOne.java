@@ -5,10 +5,13 @@ import implementation.cards.Cards;
 import fileio.CardInput;
 
 public final class TheCursedOne extends Minion implements SpecialMinion {
-  private int rowPermission;
-
   public TheCursedOne(final CardInput card) {
     super(card);
+  }
+
+  @Override
+  public int rowPermission() {
+    return 0;
   }
 
   /**
@@ -21,10 +24,5 @@ public final class TheCursedOne extends Minion implements SpecialMinion {
     int tmp = card.getHealth();
     card.setHealth(card.getAttackDamage());
     card.setAttackDamage(tmp);
-  }
-
-  @Override
-  public int RowPermission() {
-    return 0;
   }
 }

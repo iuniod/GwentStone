@@ -17,37 +17,51 @@ public class PlaceCard extends Command {
     super(commandName, handIdx);
   }
 
-  @Override
-  public void run(GameSimulation game, ObjectMapper objectMapper, ArrayNode output) {
-    int playerIdx = game.getPlayerTurn();
-    Player player = game.getPlayer(playerIdx);
-    ArrayList<Cards> hand = player.getPlayerHand();
-    ArrayList<ArrayList<Cards>> table = game.getTable();
-    int handIdx = getIndex1();
-    Cards card = hand.get(handIdx);
-    setErrorMessage(null);
-
+  /**
+   * Checks if the card can be placed on the table.
+   *
+   * @param game      the game
+   * @param player    the player who wants to place the card
+   * @param playerIdx the index of the player
+   * @param card      the card to be placed
+   * @return error message if the card cannot be placed on the table, null otherwise
+   */
+  private String findError(final GameSimulation game, final Player player,
+                           final int playerIdx, final Cards card) {
     if (Environment.isEnvironmentCard(card.getName())) {
-      setErrorMessage("Cannot place environment card on table.");
+      return "Cannot place environment card on table.";
     } else if (card.getMana() > player.getPlayerMana()) {
-      setErrorMessage("Not enough mana to place card on table.");
+      return "Not enough mana to place card on table.";
     } else {
-      Minion minion = (Minion) card;
-      int row = minion.getRowPermission();
+      int row = ((Minion) card).getRowPermission();
       if (playerIdx == 1) {
         row = (row == 0 ? 3 : 2);
       }
 
-      ArrayList<Cards> rowCards = table.get(row);
-
-      if (rowCards.size() == 5) {
-        setErrorMessage("Cannot place card on table since row is full.");
-      } else {
-        rowCards.add(card);
-        player.setPlayerMana(-1 * card.getMana());
-        hand.remove(handIdx);
+      if (game.getTable().get(row).size() == Player.MAX_ROW_SIZE) {
+        return "Cannot place card on table since row is full.";
       }
     }
+
+    return null;
+  }
+
+  /**
+   * Method that runs the command placeCard.
+   *
+   * @param game         The game simulation.
+   * @param objectMapper The object mapper.
+   * @param output       The output.
+   */
+  @Override
+  public void run(final GameSimulation game, final ObjectMapper objectMapper,
+                  final ArrayNode output) {
+    Player player = game.getPlayer(game.getPlayerTurn());
+    ArrayList<Cards> hand = player.getPlayerHand();
+    int handIdx = getIndex1();
+    Cards card = hand.get(handIdx);
+
+    setErrorMessage(findError(game, player, game.getPlayerTurn(), card));
 
     if (getErrorMessage() != null) {
       ObjectNode out = objectMapper.createObjectNode();
@@ -55,6 +69,15 @@ public class PlaceCard extends Command {
       out.put("handIdx", handIdx);
       out.put("error", getErrorMessage());
       output.add(out);
+    } else {
+      int row = ((Minion) card).getRowPermission();
+      if (game.getPlayerTurn() == 1) {
+        row = (row == 0 ? 3 : 2);
+      }
+
+      game.getTable().get(row).add(card);
+      player.setPlayerMana(-card.getMana());
+      hand.remove(handIdx);
     }
   }
 }

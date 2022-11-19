@@ -5,14 +5,12 @@ import implementation.cards.Cards;
 import implementation.cards.minion.Minion;
 
 public final class Disciple extends Minion implements SpecialMinion {
-  private int rowPermission;
-
   public Disciple(final CardInput card) {
     super(card);
   }
 
   @Override
-  public int RowPermission() {
+  public int rowPermission() {
     return 0;
   }
 

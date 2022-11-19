@@ -14,6 +14,20 @@ public class UseAttackHero extends Command {
     super(command, x, y);
   }
 
+  private String findError(final Cards attacker, final ArrayList<ArrayList<Cards>> table,
+                           final int playerIdx) {
+    if (attacker.getIsFrozen()) {
+      return "Attacker card is frozen.";
+    } else if (attacker.getHasAttacked()) {
+      return "Attacker card has already attacked this turn.";
+    } else {
+      if (!Minion.checkTankAttacker(table, "Hero", playerIdx)) {
+        return "Attacked card is not of type 'Tank'.";
+      }
+    }
+
+    return null;
+  }
   private void writeError(final ObjectMapper objectMapper, final ArrayNode output) {
     ObjectNode out = objectMapper.createObjectNode();
     ObjectNode coordinates = objectMapper.createObjectNode();
@@ -25,7 +39,8 @@ public class UseAttackHero extends Command {
     output.add(out);
   }
 
-  private void setEndGame(GameSimulation game, ObjectMapper objectMapper, ArrayNode output, int winnerIdx) {
+  private void setEndGame(final GameSimulation game, final ObjectMapper objectMapper,
+                          final ArrayNode output, final int winnerIdx) {
     ObjectNode out = objectMapper.createObjectNode();
     if (winnerIdx == 1) {
       out.put("gameEnded", "Player one killed the enemy hero.");
@@ -38,37 +53,31 @@ public class UseAttackHero extends Command {
     output.add(out);
   }
 
+  /**
+   * Method that executes the command useAttackHero.
+   * @param game         The game simulation.
+   * @param objectMapper The object mapper.
+   * @param output       The output.
+   */
   @Override
-  public void run(final GameSimulation game, final ObjectMapper objectMapper, final ArrayNode output) {
-    int x = getIndex1();
-    int y = getIndex2();
-    Cards attacker = game.getTable().get(x).get(y);
-    ArrayList<ArrayList<Cards>> table = game.getTable();
-    int playerIdx = (x <= 1 ? 2 : 1);
+  public void run(final GameSimulation game, final ObjectMapper objectMapper,
+                  final ArrayNode output) {
+    Cards attacker = game.getTable().get(getIndex1()).get(getIndex2());
+    int playerIdx = (getIndex1() <= 1 ? 2 : 1);
     int opponentIdx = (playerIdx == 1 ? 2 : 1);
 
-    if (attacker.getIsFrozen()) {
-      setErrorMessage("Attacker card is frozen.");
-    } else if (attacker.getHasAttacked()) {
-      setErrorMessage("Attacker card has already attacked this turn.");
-    } else {
-      if (!Minion.checkTankAttacker(table, "Hero", playerIdx)) {
-        setErrorMessage("Attacked card is not of type 'Tank'.");
-      }
-    }
+    setErrorMessage(findError(attacker, game.getTable(), playerIdx));
 
     if (getErrorMessage() != null) {
       writeError(objectMapper, output);
-      return;
+    } else {
+      Cards opponentHero = game.getPlayer(opponentIdx).getPlayerHero();
+      opponentHero.setHealth(opponentHero.getHealth() - attacker.getAttackDamage());
+      attacker.setAttacked();
+
+      if (opponentHero.getHealth() <= 0) {
+        setEndGame(game, objectMapper, output, playerIdx);
+      }
     }
-
-    Cards opponentHero = game.getPlayer(opponentIdx).getPlayerHero();
-    opponentHero.setHealth(opponentHero.getHealth() - attacker.getAttackDamage());
-    attacker.setAttacked();
-
-    if (opponentHero.getHealth() <= 0) {
-      setEndGame(game, objectMapper, output, playerIdx);
-    }
-
   }
 }

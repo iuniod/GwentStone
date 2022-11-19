@@ -8,8 +8,8 @@ public final class Warden extends Minion {
   }
 
   @Override
-  public int RowPermission() {
-    return  1;
+  public int rowPermission() {
+    return 1;
   }
 
 

@@ -8,7 +8,7 @@ public final class Goliath extends Minion {
   }
 
   @Override
-  public int RowPermission() {
+  public int rowPermission() {
     return 1;
   }
 }

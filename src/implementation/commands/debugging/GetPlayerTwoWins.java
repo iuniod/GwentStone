@@ -1,9 +1,10 @@
-package implementation.commands;
+package implementation.commands.debugging;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import implementation.GameSimulation.GameSimulation;
+import implementation.commands.Command;
 
 public class GetPlayerTwoWins extends Command {
 
@@ -11,6 +12,12 @@ public class GetPlayerTwoWins extends Command {
     super(commandName);
   }
 
+  /**
+   * Executes the command getPlayerTwoWins.
+   * @param game         The game simulation.
+   * @param objectMapper The object mapper.
+   * @param output       The output.
+   */
   @Override
   public void run(final GameSimulation game, final ObjectMapper objectMapper,
                      final ArrayNode output) {
