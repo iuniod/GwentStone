@@ -9,6 +9,8 @@ public abstract class Command {
   private String errorMessage = null;
   private int index1 = -1;
   private int index2 = -1;
+  private int index3 = -1;
+  private int index4 = -1;
 
   public Command(final String commandName) {
     this.commandName = commandName;
@@ -23,6 +25,14 @@ public abstract class Command {
     this.commandName = commandName;
     this.index1 = index1;
     this.index2 = index2;
+  }
+
+  public Command(final String commandName, final int index1, final int index2, final int index3, final int index4) {
+    this.commandName = commandName;
+    this.index1 = index1;
+    this.index2 = index2;
+    this.index3 = index3;
+    this.index4 = index4;
   }
 
   /**
@@ -67,5 +77,13 @@ public abstract class Command {
 
   public int getIndex2() {
     return index2;
+  }
+
+  public int getIndex3() {
+    return index3;
+  }
+
+  public int getIndex4() {
+    return index4;
   }
 }

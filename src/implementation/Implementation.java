@@ -107,6 +107,12 @@ public final class Implementation {
                 itAction.getCommand());
             getFrozenCardsOnTable.run(game, objectMapper, output);
             break;
+          case "cardUsesAttack":
+            CardUsesAttack cardUsesAttack = new CardUsesAttack(itAction.getCommand(),
+                itAction.getCardAttacker().getX(), itAction.getCardAttacker().getY(),
+                itAction.getCardAttacked().getX(), itAction.getCardAttacked().getY());
+            cardUsesAttack.run(game, objectMapper, output);
+            break;
           default:
             break;
         }

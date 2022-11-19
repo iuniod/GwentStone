@@ -15,17 +15,19 @@ public final class EndPlayerTurn extends Command {
     super(commandName);
   }
 
-  private void unfreezeCards(final GameSimulation game, final int playerIdx) {
+  private void resetCards(final GameSimulation game, final int playerIdx) {
     if (playerIdx == 1) {
       for (int i = 2; i < 4; i++) {
         for (Cards card : game.getTable().get(i)) {
           card.unfreeze();
+          card.resetHasAttacked();
         }
       }
     } else {
       for (int i = 0; i < 2; i++) {
         for (Cards card : game.getTable().get(i)) {
           card.unfreeze();
+          card.resetHasAttacked();
         }
       }
     }
@@ -33,7 +35,7 @@ public final class EndPlayerTurn extends Command {
   @Override
   public void run(final GameSimulation game, final ObjectMapper objectMapper,
                   final ArrayNode output) {
-    unfreezeCards(game, game.getPlayerTurn());
+    resetCards(game, game.getPlayerTurn());
 
     game.setPlayerTurn();
     game.setTurn(game.getTurn() + 1);

@@ -1,4 +1,4 @@
-package implementation.cards.specialMinion;
+package implementation.cards.minion.specialMinion;
 
 import fileio.CardInput;
 import implementation.cards.Cards;

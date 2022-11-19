@@ -16,6 +16,8 @@ public class Cards {
   private ArrayList<String> colors;
   private boolean isFrozen;
 
+  private boolean hasAttacked;
+
   public Cards(final CardInput card) {
     this.mana = card.getMana();
     this.health = card.getHealth();
@@ -24,6 +26,7 @@ public class Cards {
     this.description = card.getDescription();
     this.colors = card.getColors();
     this.isFrozen = false;
+    this.hasAttacked = false;
   }
 
   public Cards(final Cards card) {
@@ -34,6 +37,7 @@ public class Cards {
     this.description = card.getDescription();
     this.colors = card.getColors();
     this.isFrozen = card.getIsFrozen();
+    this.hasAttacked = card.getHasAttacked();
   }
 
   /**
@@ -165,6 +169,18 @@ public class Cards {
    */
   public void unfreeze() {
     isFrozen = false;
+  }
+
+  public boolean getHasAttacked() {
+    return hasAttacked;
+  }
+
+  public void setAttacked() {
+    hasAttacked = true;
+  }
+
+  public void resetHasAttacked() {
+    hasAttacked = false;
   }
 
   /**

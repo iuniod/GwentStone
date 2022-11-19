@@ -7,10 +7,10 @@ import implementation.cards.environment.HeartHound;
 import implementation.cards.environment.Winterfell;
 import implementation.cards.hero.*;
 import implementation.cards.minion.*;
-import implementation.cards.specialMinion.Disciple;
-import implementation.cards.specialMinion.Miraj;
-import implementation.cards.specialMinion.TheCursedOne;
-import implementation.cards.specialMinion.TheRipper;
+import implementation.cards.minion.specialMinion.Disciple;
+import implementation.cards.minion.specialMinion.Miraj;
+import implementation.cards.minion.specialMinion.TheCursedOne;
+import implementation.cards.minion.specialMinion.TheRipper;
 
 import java.util.Collections;
 import java.util.Random;
