@@ -7,7 +7,6 @@ import implementation.GameSimulation.GameSimulation;
 import implementation.cards.Cards;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class GetCardAtPosition extends Command {
 

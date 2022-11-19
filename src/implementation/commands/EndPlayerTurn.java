@@ -2,13 +2,8 @@ package implementation.commands;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import implementation.GameSimulation.GameSimulation;
-import implementation.GameSimulation.Player;
 import implementation.cards.Cards;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public final class EndPlayerTurn extends Command {
   public EndPlayerTurn(final String commandName) {
@@ -31,10 +26,13 @@ public final class EndPlayerTurn extends Command {
         }
       }
     }
+
+    Cards hero = game.getPlayer(playerIdx).getPlayerHero();
+    hero.resetHasAttacked();
   }
   @Override
   public void run(final GameSimulation game, final ObjectMapper objectMapper,
-                  final ArrayNode output) {
+                     final ArrayNode output) {
     resetCards(game, game.getPlayerTurn());
 
     game.setPlayerTurn();

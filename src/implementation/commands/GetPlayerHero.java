@@ -12,7 +12,7 @@ public final class GetPlayerHero extends Command {
 
   @Override
   public void run(final GameSimulation game, final ObjectMapper objectMapper,
-                  final ArrayNode output) {
+                     final ArrayNode output) {
     ObjectNode out = objectMapper.createObjectNode();
 
     out.put("command", getCommandName());

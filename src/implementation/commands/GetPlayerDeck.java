@@ -13,7 +13,7 @@ public final class GetPlayerDeck extends Command {
 
   @Override
   public void run(final GameSimulation game, final ObjectMapper objectMapper,
-                  final ArrayNode output) {
+                     final ArrayNode output) {
     ObjectNode out = objectMapper.createObjectNode();
     out.put("command", getCommandName());
     out.put("playerIdx", getIndex1());

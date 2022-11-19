@@ -20,6 +20,9 @@ public final class Implementation {
     /**
      * Iterate through the rounds and play them. The output is written in the output parameter.
      */
+    GameSimulation.setPlayerOneWins();
+    GameSimulation.setPlayerTwoWins();
+
     for (GameInput itGame : inputData.getGames()) {
       /**
        * Create a new game simulation. The game simulation will be used to simulate the game.
@@ -38,6 +41,7 @@ public final class Implementation {
        */
 
       for (ActionsInput itAction : itGame.getActions()) {
+        boolean endGame = false;
         switch (itAction.getCommand()) {
           case "getPlayerDeck":
             GetPlayerDeck getPlayerDeck = new GetPlayerDeck(itAction.getCommand(),
@@ -113,6 +117,21 @@ public final class Implementation {
                 itAction.getCardAttacked().getX(), itAction.getCardAttacked().getY());
             cardUsesAttack.run(game, objectMapper, output);
             break;
+          case "cardUsesAbility":
+            CardUsesAbility cardUsesAbility = new CardUsesAbility(itAction.getCommand(),
+                itAction.getCardAttacker().getX(), itAction.getCardAttacker().getY(),
+                itAction.getCardAttacked().getX(), itAction.getCardAttacked().getY());
+            cardUsesAbility.run(game, objectMapper, output);
+            break;
+          case "useAttackHero":
+            UseAttackHero useAttackHero = new UseAttackHero(itAction.getCommand(),
+                itAction.getCardAttacker().getX(), itAction.getCardAttacker().getY());
+            useAttackHero.run(game, objectMapper, output);
+            break;
+            case "useHeroAbility":
+            UseHeroAbility useHeroAbility = new UseHeroAbility(itAction.getCommand(),
+                itAction.getAffectedRow());
+            useHeroAbility.run(game, objectMapper, output);
           default:
             break;
         }

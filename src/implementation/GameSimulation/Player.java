@@ -23,7 +23,6 @@ public class Player {
 
   private Cards playerHero = null;
   private int playerMana = 0;
-  private int playerWins = 0;
 
   public Player(final ArrayList<CardInput> deck, final CardInput hero, final int seed, final int playerNumber) {
     this.playerNumber = playerNumber;
@@ -89,14 +88,6 @@ public class Player {
 
   public void setPlayerMana(final int playerMana) {
     this.playerMana += playerMana;
-  }
-
-  public int getPlayerWins() {
-    return playerWins;
-  }
-
-  public void setPlayerWins(final int playerWins) {
-    this.playerWins = playerWins;
   }
 
   public void addCardToHand() {

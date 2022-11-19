@@ -13,10 +13,10 @@ public class GetPlayerTwoWins extends Command {
 
   @Override
   public void run(final GameSimulation game, final ObjectMapper objectMapper,
-                  final ArrayNode output) {
+                     final ArrayNode output) {
     ObjectNode out = objectMapper.createObjectNode();
     out.put("command", getCommandName());
-    out.put("output", game.getPlayer(2).getPlayerWins());
+    out.put("output", game.getPlayerTwoWins());
     output.add(out);
   }
 }

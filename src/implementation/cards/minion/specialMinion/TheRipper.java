@@ -19,6 +19,9 @@ public final class TheRipper extends Minion implements SpecialMinion {
   @Override
   public void ability(final Cards card) {
     card.setAttackDamage(card.getAttackDamage() - 2);
+    if (card.getAttackDamage() < 0) {
+      card.setAttackDamage(0);
+    }
   }
 
   @Override

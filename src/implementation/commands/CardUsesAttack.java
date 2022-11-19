@@ -5,41 +5,14 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import implementation.GameSimulation.GameSimulation;
 import implementation.cards.Cards;
+import implementation.cards.minion.Minion;
 
 import java.util.ArrayList;
 
 public class CardUsesAttack extends Command {
-  private static final ArrayList<String> tankCards = new ArrayList<String>() {{
-    add("Goliath");
-    add("Warden");
-  }};
   public CardUsesAttack(final String command, final int xAttacker, final int yAttacker,
                         final int xAttacked, final int yAttacked) {
     super(command, xAttacker, yAttacker, xAttacked, yAttacked);
-  }
-
-  private boolean checkTankAttacker(ArrayList<ArrayList<Cards>> table, String cardName, int playerIdx) {
-    if (CardUsesAttack.isTankCard(cardName)) {
-      return true;
-    }
-    if (playerIdx == 1) {
-      for (Cards card : table.get(1)) {
-          if (CardUsesAttack.isTankCard(card.getName())) {
-            return false;
-          }
-      }
-    } else {
-      for (Cards card : table.get(2)) {
-          if (CardUsesAttack.isTankCard(card.getName())) {
-            return false;
-          }
-      }
-    }
-    return true;
-  }
-
-  private static boolean isTankCard(final String cardName) {
-    return tankCards.contains(cardName);
   }
 
   @Override
@@ -60,7 +33,7 @@ public class CardUsesAttack extends Command {
     } else {
       ArrayList<ArrayList<Cards>> table = game.getTable();
       int playerIdx = (xAttacker <= 1 ? 2 : 1);
-      if (!checkTankAttacker(table, attacked.getName(), playerIdx)) {
+      if (!Minion.checkTankAttacker(table, attacked.getName(), playerIdx)) {
         setErrorMessage("Attacked card is not of type 'Tank'.");
       } else {
         attacked.setHealth(attacked.getHealth() - attacker.getAttackDamage());

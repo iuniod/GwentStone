@@ -9,7 +9,6 @@ import implementation.cards.Cards;
 import implementation.cards.environment.Environment;
 import implementation.cards.minion.Minion;
 
-import java.util.List;
 import java.util.ArrayList;
 
 public class PlaceCard extends Command {

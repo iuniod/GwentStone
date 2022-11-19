@@ -41,6 +41,7 @@ public abstract class Command {
    * @param game         The game simulation.
    * @param objectMapper The object mapper.
    * @param output       The output.
+   * @return
    */
   public abstract void run(GameSimulation game, ObjectMapper objectMapper, ArrayNode output);
 

@@ -81,6 +81,8 @@
   "command" : "getFrozenCardsOnTable",
   "output" : [ ]
 }, {
+  "gameEnded" : "Player two killed the enemy hero."
+}, {
   "command" : "getCardsOnTable",
   "output" : [ [ {
     "mana" : 1,
@@ -135,10 +137,10 @@
   } ]
 }, {
   "command" : "getTotalGamesPlayed",
-  "output" : 0
+  "output" : 1
 }, {
   "command" : "getPlayerTwoWins",
-  "output" : 0
+  "output" : 1
 }, {
   "command" : "getPlayerOneWins",
   "output" : 0
@@ -234,6 +236,13 @@
   "command" : "getFrozenCardsOnTable",
   "output" : [ ]
 }, {
+  "command" : "useAttackHero",
+  "cardAttacker" : {
+    "x" : 1,
+    "y" : 1
+  },
+  "error" : "Attacked card is not of type 'Tank'."
+}, {
   "command" : "getCardAtPosition",
   "x" : 2,
   "y" : 0,
@@ -271,12 +280,14 @@
   "y" : 0,
   "output" : {
     "mana" : 2,
-    "attackDamage" : 7,
+    "attackDamage" : 5,
     "health" : 1,
     "description" : "Standard card: He has seen everything, his mind has never been asleep since the making of the realm.",
     "colors" : [ "Brown", "Blue" ],
     "name" : "Warden"
   }
+}, {
+  "gameEnded" : "Player one killed the enemy hero."
 }, {
   "command" : "getCardsOnTable",
   "output" : [ [ {
@@ -302,7 +313,7 @@
     "name" : "The Ripper"
   } ], [ {
     "mana" : 2,
-    "attackDamage" : 7,
+    "attackDamage" : 5,
     "health" : 1,
     "description" : "Standard card: He has seen everything, his mind has never been asleep since the making of the realm.",
     "colors" : [ "Brown", "Blue" ],
@@ -342,11 +353,11 @@
   } ]
 }, {
   "command" : "getTotalGamesPlayed",
-  "output" : 0
+  "output" : 2
 }, {
   "command" : "getPlayerTwoWins",
-  "output" : 0
+  "output" : 1
 }, {
   "command" : "getPlayerOneWins",
-  "output" : 0
+  "output" : 1
 } ]

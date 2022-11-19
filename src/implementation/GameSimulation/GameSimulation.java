@@ -11,6 +11,8 @@ import implementation.cards.Cards;
 public final class GameSimulation {
   private Player playerOne = null;
   private Player playerTwo = null;
+  private static int playerOneWins = 0;
+  private static int playerTwoWins = 0;
   ArrayList<ArrayList<Cards>> table = null;
   private int playerTurn = 0;
   private int round = 0;
@@ -40,7 +42,7 @@ public final class GameSimulation {
    * @return The player.
    */
   public Player getPlayer(final int player) {
-    return player == 1 ? playerOne : playerTwo;
+    return player == 2 ? playerTwo : playerOne;
   }
 
   public int getPlayerTurn() {
@@ -76,6 +78,30 @@ public final class GameSimulation {
   }
 
   public int getTotalGamesPlayed() {
-    return playerOne.getPlayerWins() + playerTwo.getPlayerWins();
+    return playerOneWins + playerTwoWins;
+  }
+
+  public int getPlayerOneWins() {
+    return playerOneWins;
+  }
+
+  public int getPlayerTwoWins() {
+    return playerTwoWins;
+  }
+
+  public void addPlayerOneWins() {
+    playerOneWins++;
+  }
+
+  public void addPlayerTwoWins() {
+    playerTwoWins++;
+  }
+
+  public static void setPlayerOneWins() {
+    playerOneWins = 0;
+  }
+
+  public static void setPlayerTwoWins() {
+    playerTwoWins = 0;
   }
 }
