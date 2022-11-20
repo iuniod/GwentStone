@@ -1,2 +1,18 @@
 Starting audit...
+[ERROR] /home/iustina/laburi_POO/tema/./src/implementation/Implementation.java:9:31: Using the '.*' form of import should be avoided - implementation.commands.*. [AvoidStarImport]
+[ERROR] /home/iustina/laburi_POO/tema/./src/implementation/Implementation.java:10:41: Using the '.*' form of import should be avoided - implementation.commands.debugging.*. [AvoidStarImport]
+[ERROR] /home/iustina/laburi_POO/tema/./src/implementation/commands/PlaceCard.java:38:27: '3' is a magic number. [MagicNumber]
+[ERROR] /home/iustina/laburi_POO/tema/./src/implementation/commands/PlaceCard.java:75:27: '3' is a magic number. [MagicNumber]
+[ERROR] /home/iustina/laburi_POO/tema/./src/implementation/commands/EndPlayerTurn.java:15:36: '4' is a magic number. [MagicNumber]
+[ERROR] /home/iustina/laburi_POO/tema/./src/implementation/commands/EndPlayerTurn.java:38:30: '10' is a magic number. [MagicNumber]
+[ERROR] /home/iustina/laburi_POO/tema/./src/implementation/commands/UseEnvironmentCard.java:47:17: '3' is a magic number. [MagicNumber]
+[ERROR] /home/iustina/laburi_POO/tema/./src/implementation/commands/UseEnvironmentCard.java:50:12: '3' is a magic number. [MagicNumber]
+[ERROR] /home/iustina/laburi_POO/tema/./src/implementation/commands/debugging/GetFrozenCardsOnTable.java:28:25: '4' is a magic number. [MagicNumber]
+[ERROR] /home/iustina/laburi_POO/tema/./src/implementation/GameSimulation/GameSimulation.java:3:17: Using the '.*' form of import should be avoided - java.util.*. [AvoidStarImport]
+[ERROR] /home/iustina/laburi_POO/tema/./src/implementation/GameSimulation/Player.java:5:40: Using the '.*' form of import should be avoided - implementation.cards.environment.*. [AvoidStarImport]
+[ERROR] /home/iustina/laburi_POO/tema/./src/implementation/GameSimulation/Player.java:6:33: Using the '.*' form of import should be avoided - implementation.cards.hero.*. [AvoidStarImport]
+[ERROR] /home/iustina/laburi_POO/tema/./src/implementation/GameSimulation/Player.java:7:35: Using the '.*' form of import should be avoided - implementation.cards.minion.*. [AvoidStarImport]
+[ERROR] /home/iustina/laburi_POO/tema/./src/implementation/GameSimulation/Player.java:8:49: Using the '.*' form of import should be avoided - implementation.cards.minion.specialMinion.*. [AvoidStarImport]
+[ERROR] /home/iustina/laburi_POO/tema/./src/implementation/GameSimulation/Player.java:15:16: 'static' modifier out of order with the JLS suggestions. [ModifierOrder]
 Audit done.
+Checkstyle ends with 15 errors.

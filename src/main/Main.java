@@ -15,6 +15,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
 
+import implementation.Implementation;
+
 /**
  * The entry point to this homework. It runs the checker that tests your implentation.
  */
@@ -68,8 +70,10 @@ public final class Main {
                 Input.class);
 
         ArrayNode output = objectMapper.createArrayNode();
-
         //TODO add here the entry point to your implementation
+
+        Implementation myMain = new Implementation();
+        myMain.run(inputData, output, objectMapper);
 
         ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
         objectWriter.writeValue(new File(filePath2), output);
